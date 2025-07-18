@@ -307,22 +307,22 @@
     <h3>Eligibility Form</h3>
     <form id="applicationForm">
       <input type="hidden" id="selectedOffer" />
+
       <label>Full Name</label>
       <input type="text" id="fullName" required />
+
       <label>Email Address</label>
       <input type="email" id="email" required />
-      <label>Location</label>
-      <input type="text" id="location" required />
+
+      <label>Phone Number</label>
+      <input type="text" id="phone" required />
+
       <label>How long have you been a fan?</label>
-      <input type="text" id="duration" required />
-      <label>Your Top 3 Chris Stapleton Songs</label>
-      <textarea id="songs" required></textarea>
-      <label>What does Chris’s music mean to you?</label>
-      <textarea id="meaning" required></textarea>
+      <textarea id="fanDuration" required></textarea>
+
       <label>Have you attended any concerts?</label>
-      <textarea id="shows" required></textarea>
-      <label>Why should we accept you?</label>
-      <textarea id="reason" required></textarea>
+      <textarea id="concerts" required></textarea>
+
       <button type="button" onclick="downloadForm()">Download & Continue</button>
     </form>
   </div>
@@ -343,7 +343,7 @@
 </footer>
 
 <script>
-  function openForm(tier) {
+ function openForm(tier) {
     document.getElementById("fanForm").style.display = "flex";
     document.getElementById("selectedOffer").value = tier;
     document.getElementById("submissionLinks")?.remove();
@@ -357,31 +357,25 @@
     const offer = document.getElementById("selectedOffer").value;
     const name = document.getElementById("fullName").value;
     const email = document.getElementById("email").value;
-    const location = document.getElementById("location").value;
-    const duration = document.getElementById("duration").value;
-    const songs = document.getElementById("songs").value;
-    const meaning = document.getElementById("meaning").value;
-    const shows = document.getElementById("shows").value;
-    const reason = document.getElementById("reason").value;
+    const phone = document.getElementById("phone").value;
+    const duration = document.getElementById("fanDuration").value;
+    const concerts = document.getElementById("concerts").value;
 
-    if (!name || !email || !location || !duration || !songs || !meaning || !shows || !reason) {
-      alert("Please complete all fields before submitting.");
+    if (!name || !email || !phone || !duration || !concerts) {
+      alert("Please fill in all fields before continuing.");
       return;
     }
 
     const content = `
-Fan Club Application - ${offer}
+James Blunt Fan Club Application - ${offer}
 
 Full Name: ${name}
 Email: ${email}
-Location: ${location}
+Phone Number: ${phone}
 Fan Since: ${duration}
-Top 3 Songs: ${songs}
-Meaning of Chris's Music: ${meaning}
-Shows Attended: ${shows}
-Why Should You Be Accepted: ${reason}
+Concerts Attended: ${concerts}
 
-Please review and submit this form via WhatsApp or email.
+Please send this file via WhatsApp or email for review.
 `;
 
     const blob = new Blob([content], { type: "text/plain" });
@@ -395,31 +389,38 @@ Please review and submit this form via WhatsApp or email.
 
   function showContactInfo() {
     const form = document.getElementById("applicationForm");
+    if (document.getElementById("submissionLinks")) return;
+
     const div = document.createElement("div");
     div.id = "submissionLinks";
+      div.innerHTML = `
+  <div style="text-align: center; margin-top: 30px;">
+    <p style="font-size: 1.1em; font-weight: bold; color: #1c1c1c;">Your form has been downloaded successfully!</p>
+    <p style="margin: 15px 0; font-size: 1em;">Please submit it via one of the contact options below:</p>
 
-    div.innerHTML = `
-      <div style="text-align: center; margin-top: 30px;">
-        <p><strong>Your form has been downloaded successfully.</strong></p>
-        <p>Please send your completed form:</p>
-        <p style="margin: 10px 0;">
-          <i class="fas fa-envelope" style="color: #3c1e0b; font-size: 1.3em;"></i> <strong><em>Send via Email</em></strong>
-        </p>
-        <p style="margin: 10px 0;">
-          <i class="fab fa-whatsapp" style="color: green; font-size: 1.5em;"></i> <strong><em>Send via WhatsApp</em></strong>
-        </p>
-        <p style="margin-top:10px; font-size: 0.9em; color: #444;">
-          After we verify your submission, you'll be contacted with payment access for membership.
-        </p>
-      </div>
-    `;
+    <div style="display: flex; justify-content: center; gap: 30px; margin-top: 20px; flex-wrap: wrap;">
+      <a href="mailto:chrisstapletonfanclubcontact@gmail.com?subject=Fan Club Form Submission" target="_blank"
+        style="display: flex; align-items: center; background-color: #f3f3f3; padding: 12px 18px; border-radius: 10px; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color: #333;">
+        <i class="fas fa-envelope" style="font-size: 1.5em; color: #8b4513; margin-right: 10px;"></i>
+        <span style="font-size: 1em;">Send via Email</span>
+      </a>
+
+      <a href="https://wa.me/12525934341?text=Hi%2C%20I%27ve%20completed%20my%20fan%20form%20and%20attached%20it%20here." target="_blank"
+        style="display: flex; align-items: center; background-color: #e8fff0; padding: 12px 18px; border-radius: 10px; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color: #1c1c1c;">
+        <i class="fab fa-whatsapp" style="font-size: 1.7em; color: #25D366; margin-right: 10px;"></i>
+        <span style="font-size: 1em;">Send via WhatsApp</span>
+      </a>
+    </div>
+
+    <p style="margin-top: 25px; font-size: 0.9em; color: #555;">
+      Once your submission is verified, we’ll contact you with payment and next steps.
+    </p>
+  </div>
+`;
+
 
     form.appendChild(div);
   }
-
-  window.addEventListener('load', () => {
-    document.getElementById("loader").style.display = "none";
-  });
 </script>
 
 </body>

@@ -343,6 +343,9 @@
 </footer>
 
 <script>
+    window.onload = function () {
+    document.getElementById("loader").style.display = "none";
+  };
  function openForm(tier) {
     document.getElementById("fanForm").style.display = "flex";
     document.getElementById("selectedOffer").value = tier;
